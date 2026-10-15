@@ -1,0 +1,23 @@
+[
+  {
+    "date": "May 2026",
+    "title": "Encyclopedia in Operations Management published",
+    "text": "Edited volume published by Elsevier.",
+    "image": "images/publications-1.jpg",
+    "link": ""
+  },
+  {
+    "date": "Jan 2026",
+    "title": "Seminar at ULMS",
+    "text": "Blockchain Technology for Manufacturing and Service Operations, N8 OSCM Research Seminar Series.",
+    "image": "images/home-2.jpg",
+    "link": ""
+  },
+  {
+    "date": "2025",
+    "title": "Clarivate Highly Cited Researcher",
+    "text": "Listed as a Highly Cited Researcher (Web of Science) every year since 2022.",
+    "image": "images/impact-1.png",
+    "link": "https://clarivate.com/highly-cited-researchers/"
+  }
+]

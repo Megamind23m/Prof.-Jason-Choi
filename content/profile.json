@@ -1,0 +1,101 @@
+{
+  "name": "Tsan-Ming Choi",
+  "preferred_name": "Jason",
+  "credentials": "PhD, Professor",
+  "photo": "images/home-1.jpg",
+  "positions": [
+    "Chair in Operations and Supply Chain Management",
+    "Director of the Centre for Supply Chain Research (CSCR)"
+  ],
+  "affiliation": "University of Liverpool Management School",
+  "tagline_prefix": "Shaping supply chains that are",
+  "tagline_words": [
+    "intelligent.",
+    "resilient.",
+    "sustainable.",
+    "circular.",
+    "trustworthy."
+  ],
+  "badge": "Highly Cited Researcher, every year since 2022",
+  "honours": [
+    {
+      "role": "Editor-in-Chief",
+      "outlet": "IEEE Transactions on Engineering Management"
+    },
+    {
+      "role": "Senior Editor",
+      "outlet": "Production and Operations Management"
+    },
+    {
+      "role": "Past Editor-in-Chief",
+      "outlet": "Transportation Research Part E"
+    },
+    {
+      "role": "Yushan Fellow Professor",
+      "outlet": "National Taiwan University"
+    }
+  ],
+  "bio": "Tsan-Ming CHOI (Jason) is an operational researcher and systems engineer. He is now Chair in Operations and Supply Chain Management, and Director of the Centre for Supply Chain Research (CSCR) at University of Liverpool Management School (ULMS). He has published extensively in leading journals in the fields of operations management, engineering management, and logistics and supply chain management. His recent research has been funded by many external funding bodies. Over the past decade, he has served the academic community as an editor/senior editor of journals such as IEEE Transactions on Engineering Management, IEEE Transactions on SMC-Systems, and Production and Operations Management. He is also the advisory editor (past EIC) of Transportation Research Part E. He has been listed as a Highly Cited Researcher by Clarivate (Web of Science) since 2022. Before joining ULMS, he taught at National Taiwan University (NTU), The Hong Kong Polytechnic University (PolyU), and The Chinese University of Hong Kong (CUHK), together for more than 20 years. He is honoured as a Yushan Fellow Professor at NTU, a President's Award Winning Professor at PolyU, and a distinguished alumnus of CUHK's Faculty of Engineering.",
+  "journey": [
+    {
+      "place": "The Chinese University of Hong Kong",
+      "short": "CUHK",
+      "note": "Distinguished Alumnus, Faculty of Engineering"
+    },
+    {
+      "place": "The Hong Kong Polytechnic University",
+      "short": "PolyU",
+      "note": "President's Award Winning Professor"
+    },
+    {
+      "place": "National Taiwan University",
+      "short": "NTU",
+      "note": "Yushan Fellow Professor"
+    },
+    {
+      "place": "University of Liverpool",
+      "short": "Liverpool",
+      "note": "Chair in OSCM and Director of CSCR"
+    }
+  ],
+  "last_updated": "January 2026",
+  "email": "t.m.choi@liverpool.ac.uk",
+  "phone": "+44 (0)151 794 0434",
+  "address": "Centre for Supply Chain Research, University of Liverpool Management School, Chatham Building, Liverpool L69 7ZH, United Kingdom",
+  "links": [
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=YdR1998AAAAJ&hl"
+    },
+    {
+      "label": "ORCID",
+      "url": "https://orcid.org/0000-0003-3865-7043"
+    },
+    {
+      "label": "ResearchGate",
+      "url": "https://www.researchgate.net/profile/Tsan-Ming-Choi"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/tsan-ming-jason-choi-29035440/"
+    },
+    {
+      "label": "ULMS profile",
+      "url": "https://www.liverpool.ac.uk/people/jason-choi"
+    }
+  ],
+  "identifiers": [
+    {
+      "label": "ORCID",
+      "value": "0000-0003-3865-7043"
+    },
+    {
+      "label": "Scopus ID",
+      "value": "7202769936"
+    },
+    {
+      "label": "Web of Science ResearcherID",
+      "value": "HCH-1964-2022"
+    }
+  ]
+}

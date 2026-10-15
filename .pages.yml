@@ -1,0 +1,224 @@
+# Editor configuration for Pages CMS (https://app.pagescms.org).
+# Each entry below becomes a form in the editor. Saving a form updates the website.
+
+media:
+  input: images
+  output: images
+
+content:
+  - name: profile
+    label: Profile & contact
+    type: file
+    path: content/profile.json
+    format: json
+    fields:
+      - { name: name, label: Full name, type: string }
+      - { name: preferred_name, label: Preferred name, type: string }
+      - { name: credentials, label: Credentials, type: string }
+      - { name: photo, label: Portrait photo, type: image }
+      - { name: positions, label: Positions, type: string, list: true }
+      - { name: affiliation, label: Affiliation, type: string }
+      - { name: tagline_prefix, label: Hero line (before the animated words), type: string }
+      - { name: tagline_words, label: Animated words in the hero, type: string, list: true }
+      - { name: badge, label: Gold badge text on photo, type: string }
+      - name: honours
+        label: Leadership strip (under the hero)
+        type: object
+        list: true
+        fields:
+          - { name: role, label: Role, type: string }
+          - { name: outlet, label: Journal or institution, type: string }
+      - { name: bio, label: Biography, type: text }
+      - name: journey
+        label: Academic journey (in order)
+        type: object
+        list: true
+        fields:
+          - { name: place, label: Institution, type: string }
+          - { name: short, label: Short name, type: string }
+          - { name: note, label: Role or honour, type: string }
+      - { name: last_updated, label: Last updated (shown in footer), type: string }
+      - { name: email, label: Email, type: string }
+      - { name: phone, label: Phone, type: string }
+      - { name: address, label: Address, type: text }
+      - name: links
+        label: Profile links
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Label, type: string }
+          - { name: url, label: URL, type: string }
+      - name: identifiers
+        label: Researcher identifiers
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Label, type: string }
+          - { name: value, label: Value, type: string }
+
+  - name: news
+    label: Latest news
+    type: file
+    path: content/news.json
+    format: json
+    list: true
+    fields:
+      - { name: date, label: Date (e.g. May 2026), type: string }
+      - { name: title, label: Title, type: string }
+      - { name: text, label: Short text, type: text }
+      - { name: image, label: Image, type: image }
+      - { name: link, label: Link (optional), type: string }
+
+  - name: publications
+    label: Publications
+    type: file
+    path: content/publications.json
+    format: json
+    list: true
+    fields:
+      - name: category
+        label: Category
+        type: select
+        options:
+          values: ["UTD24 / FT50 journals", "Other ABS 4* journals", "Other selected journals", "Books"]
+      - { name: year, label: Year, type: number }
+      - { name: citation, label: Full citation, type: text }
+      - { name: journal, label: Journal name (for the filter), type: string }
+      - { name: link, label: DOI or link, type: string }
+      - { name: hidden, label: Hide from website, type: boolean }
+
+  - name: research
+    label: Research
+    type: file
+    path: content/research.json
+    format: json
+    fields:
+      - name: interests
+        label: Research interests (cards)
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Title, type: string }
+          - { name: description, label: Description, type: text }
+      - { name: vision, label: Vision statement (large quote band), type: text }
+      - { name: statement, label: Research statement paragraphs, type: text, list: true }
+      - name: images
+        label: Figures
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Image, type: image }
+          - { name: caption, label: Caption, type: string }
+
+  - name: team
+    label: Research team
+    type: file
+    path: content/team.json
+    format: json
+    fields:
+      - name: groups
+        label: Groups
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Group title, type: string }
+          - name: members
+            label: Members
+            type: object
+            list: true
+            fields:
+              - { name: name, label: Name, type: string }
+              - { name: note, label: Note (years, institution), type: string }
+      - name: photos
+        label: Team photos
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Photo, type: image }
+          - { name: caption, label: Caption, type: string }
+
+  - name: impact
+    label: Funding & impact
+    type: file
+    path: content/impact.json
+    format: json
+    fields:
+      - name: metrics
+        label: Headline numbers (Google Scholar ones update automatically)
+        type: object
+        list: true
+        fields:
+          - { name: value, label: Value, type: string }
+          - { name: label, label: Label, type: string }
+      - { name: highlights, label: Impact highlights, type: text, list: true }
+      - name: projects
+        label: Funded projects
+        type: object
+        list: true
+        fields:
+          - name: role
+            label: Role
+            type: select
+            options:
+              values: ["PI", "PI (UK)", "Co"]
+          - { name: title, label: Project title, type: text }
+          - { name: amount, label: Amount, type: string }
+          - { name: funder, label: Funder, type: string }
+          - { name: year, label: Year awarded, type: number }
+          - { name: note, label: Note (e.g. PI name), type: string }
+
+  - name: teaching
+    label: Teaching
+    type: file
+    path: content/teaching.json
+    format: json
+    fields:
+      - name: courses
+        label: Courses
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Course, type: string }
+          - { name: level, label: Level, type: string }
+      - name: photos
+        label: Photos
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Photo, type: image }
+          - { name: caption, label: Caption, type: string }
+
+  - name: service
+    label: Service & editorships
+    type: file
+    path: content/service.json
+    format: json
+    fields:
+      - name: roles
+        label: Roles
+        type: object
+        list: true
+        fields:
+          - { name: role, label: Role, type: string }
+          - { name: detail, label: Journal / body, type: text }
+      - name: images
+        label: Journal covers
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Image, type: image }
+          - { name: caption, label: Caption, type: string }
+
+  - name: sync
+    label: Automatic publication sync
+    type: file
+    path: content/sync.json
+    format: json
+    fields:
+      - { name: enabled, label: Sync every week, type: boolean }
+      - { name: scholar_id, label: Google Scholar user ID, type: string }
+      - { name: orcid, label: ORCID, type: string }
+      - { name: auto_add_from_year, label: Only add papers from this year onwards, type: number }
+      - { name: update_metrics, label: Update Google Scholar numbers, type: boolean }
+      - { name: exclude_titles, label: Never add these titles, type: string, list: true }
+      - { name: exclude_venues, label: Never add items from these venues, type: string, list: true }

@@ -1,0 +1,142 @@
+{
+  "groups": [
+    {
+      "title": "Visiting professors and scholars",
+      "members": [
+        {
+          "name": "Daisy Li",
+          "note": "2023-2024"
+        },
+        {
+          "name": "Xuanming Bai",
+          "note": "2024-2025"
+        },
+        {
+          "name": "Nana Liu",
+          "note": "2024-2025"
+        },
+        {
+          "name": "Tanmoy Kundu",
+          "note": "2026"
+        },
+        {
+          "name": "Julianne Cai",
+          "note": "2026-2027"
+        },
+        {
+          "name": "Wendy Zhao",
+          "note": "2026-2027"
+        }
+      ]
+    },
+    {
+      "title": "Current PhD students",
+      "members": [
+        {
+          "name": "Busra Bayrak",
+          "note": "2023, ULMS"
+        },
+        {
+          "name": "Alicia Lin",
+          "note": "2023, ULMS"
+        },
+        {
+          "name": "Ivy Liang",
+          "note": "2024, ULMS"
+        },
+        {
+          "name": "Clea Wu",
+          "note": "2024, XJT-Liverpool U"
+        },
+        {
+          "name": "Judy Yi",
+          "note": "2024, PolyU"
+        },
+        {
+          "name": "Shivani Mishra",
+          "note": "2025, ULMS"
+        },
+        {
+          "name": "Hanna Minh Huong Le",
+          "note": "2026, ULMS"
+        },
+        {
+          "name": "Liuyi Su",
+          "note": "2026, XJT-Liverpool U"
+        }
+      ]
+    },
+    {
+      "title": "Visiting PhD students (current)",
+      "members": [
+        {
+          "name": "Hannah Guo",
+          "note": ""
+        },
+        {
+          "name": "Boru Li",
+          "note": ""
+        },
+        {
+          "name": "Summer Sun",
+          "note": ""
+        },
+        {
+          "name": "Claire Wang",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "title": "Visiting PhD students (past)",
+      "members": [
+        {
+          "name": "Yihan Jing",
+          "note": ""
+        },
+        {
+          "name": "Zhongyun Li",
+          "note": ""
+        },
+        {
+          "name": "Yumi Ma",
+          "note": ""
+        },
+        {
+          "name": "Abhinay Mishra",
+          "note": ""
+        },
+        {
+          "name": "Liam Ouyang",
+          "note": ""
+        },
+        {
+          "name": "Lu Yang",
+          "note": ""
+        },
+        {
+          "name": "Joey Zhou",
+          "note": ""
+        }
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "image": "images/team-1.jpg",
+      "caption": "My team after the RSG meeting at ULMS (Feb 2024)"
+    },
+    {
+      "image": "images/team-2.jpg",
+      "caption": "After the seminar (Jun 2025)"
+    },
+    {
+      "image": "images/team-3.jpg",
+      "caption": "Christmas lunch gathering (Dec 2024)"
+    },
+    {
+      "image": "images/team-4.jpg",
+      "caption": "Christmas lunch meeting (Nov 2025)"
+    }
+  ]
+}

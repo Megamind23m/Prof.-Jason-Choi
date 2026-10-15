@@ -1,0 +1,50 @@
+{
+  "courses": [
+    {
+      "title": "Planning for Risk, Uncertainty and Complexity",
+      "level": "MSc"
+    },
+    {
+      "title": "Analytical Modelling Research Methodology for OM",
+      "level": "PhD"
+    }
+  ],
+  "photos": [
+    {
+      "image": "images/teaching-1.jpg",
+      "caption": "Congregation, ULMS (Dec 2023)"
+    },
+    {
+      "image": "images/teaching-2.jpg",
+      "caption": "Summer school, ULMS (June 2023)"
+    },
+    {
+      "image": "images/teaching-3.jpg",
+      "caption": "Summer school, ULMS (June 2023)"
+    },
+    {
+      "image": "images/teaching-4.jpg",
+      "caption": "Summer school, ULMS (June 2024)"
+    },
+    {
+      "image": "images/teaching-5.jpg",
+      "caption": "Summer school, ULMS (June 2024)"
+    },
+    {
+      "image": "images/teaching-6.jpg",
+      "caption": "Summer school, ULMS (June 2025)"
+    },
+    {
+      "image": "images/teaching-7.jpg",
+      "caption": "Summer school, ULMS (June 2025)"
+    },
+    {
+      "image": "images/teaching-8.jpg",
+      "caption": "Summer school, ULMS (June 2026)"
+    },
+    {
+      "image": "images/teaching-9.jpg",
+      "caption": "Summer school, ULMS (June 2026)"
+    }
+  ]
+}

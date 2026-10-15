@@ -1,0 +1,116 @@
+{
+  "metrics": [
+    {
+      "value": "41,064",
+      "label": "Google Scholar citations"
+    },
+    {
+      "value": "109",
+      "label": "Google Scholar h-index"
+    },
+    {
+      "value": "376",
+      "label": "Google Scholar i10-index"
+    },
+    {
+      "value": "76",
+      "label": "Web of Science h-index"
+    },
+    {
+      "value": "21,677",
+      "label": "Web of Science citations"
+    }
+  ],
+  "highlights": [
+    "Clarivate Web of Science Highly Cited Researcher (OR&MS subject category) since 2022.",
+    "Research cited by the United Nations, the World Health Organization (WHO), patents, government policy papers and news articles."
+  ],
+  "projects": [
+    {
+      "role": "Co",
+      "title": "Enhancing Right-first-time Accuracy in Dyeing Production: A Novel Machine Learning Supported Scheduling Approach",
+      "amount": "HK$886,086",
+      "funder": "RGC (HK)",
+      "year": 2026,
+      "note": "PI: Helen Ma"
+    },
+    {
+      "role": "Co",
+      "title": "Contract Design in Geopolitically Volatile Supply Chains: Navigating Hidden Retailers’ Objectives",
+      "amount": "HK$497,859",
+      "funder": "RGC (HK)",
+      "year": 2026,
+      "note": "PI: Hau-Ling Chan"
+    },
+    {
+      "role": "Co",
+      "title": "Robotic Mobile Fulfillment Systems: A New Design to Enable Inter-workstation Bin Movement",
+      "amount": "HK$1,234,817",
+      "funder": "RGC (HK)",
+      "year": 2025,
+      "note": "PI: Nick Chung"
+    },
+    {
+      "role": "PI (UK)",
+      "title": "Synergistic Co-Diffusion of Electric and Hydrogen Vehicles: Advancing Net-Zero Emission for Sustainable Supplies",
+      "amount": "TW$400,000",
+      "funder": "Taiwan-UK University Consortium Grant",
+      "year": 2025,
+      "note": "PI (TW): Ben Yang; Co-I (TW): Yenming Chen"
+    },
+    {
+      "role": "Co",
+      "title": "Impacts of Fairness on Cabin Crew Scheduling: Crew Preferences and Allowances",
+      "amount": "HK$1,491,600",
+      "funder": "RGC (HK)",
+      "year": 2024,
+      "note": "PI: Helen Ma"
+    },
+    {
+      "role": "Co",
+      "title": "Impacts of Teamwork on Operations Costs and Flight Delays: Airline Crew Scheduling",
+      "amount": "HK$1,031,242",
+      "funder": "RGC (HK)",
+      "year": 2023,
+      "note": "PI: Windy Wen"
+    },
+    {
+      "role": "PI",
+      "title": "On-Demand-Service Platform Operations: Risk Matching of Service Agents and Customers",
+      "amount": "TW$2,700,000",
+      "funder": "M.O.S.T. (TW) Funding Scheme",
+      "year": 2022,
+      "note": ""
+    },
+    {
+      "role": "Co",
+      "title": "Circular Supply Chain Management with Bayesian Information Updating, Government Policies and Strategic Alliance for Sustainability Commitment",
+      "amount": "HK$661,580",
+      "funder": "RGC (HK)",
+      "year": 2022,
+      "note": "PI: Hau-Ling Chan"
+    },
+    {
+      "role": "PI",
+      "title": "Blockchain Technology Supported Supply Chain Operational Strategies with Applications in High-Tech Industries",
+      "amount": "TW$11,250,000",
+      "funder": "Yushan Fellow Program, M.O.E., Taiwan",
+      "year": 2021,
+      "note": ""
+    }
+  ],
+  "photos": [
+    {
+      "image": "images/impact-2.jpg",
+      "caption": ""
+    },
+    {
+      "image": "images/impact-3.jpg",
+      "caption": ""
+    },
+    {
+      "image": "images/impact-4.jpg",
+      "caption": ""
+    }
+  ]
+}

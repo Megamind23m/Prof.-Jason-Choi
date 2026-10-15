@@ -1,0 +1,46 @@
+{
+  "roles": [
+    {
+      "role": "Editor-in-Chief",
+      "detail": "IEEE Transactions on Engineering Management"
+    },
+    {
+      "role": "Senior Editor",
+      "detail": "Production & Operations Management; Decision Support Systems; IEEE Transactions on SMC-Systems"
+    },
+    {
+      "role": "Past Editor-in-Chief and Advisory Editor",
+      "detail": "Transportation Research Part E"
+    },
+    {
+      "role": "Editorial Advisory Board Member",
+      "detail": "EJOR, IJPE, IJPR, ITOR"
+    },
+    {
+      "role": "Founding Book Series Editor",
+      "detail": "Springer Series in Fashion Business"
+    },
+    {
+      "role": "Chair",
+      "detail": "SIG of Blockchain Technologies for Supply Chain Management, IEEE-TEMS Blockchain TC"
+    },
+    {
+      "role": "Co-Chair",
+      "detail": "IFAC Working Group on “Challenges and Opportunities in Applying Additive Manufacturing in Supply Chains”"
+    }
+  ],
+  "images": [
+    {
+      "image": "images/service-1.png",
+      "caption": "IEEE Transactions on Engineering Management"
+    },
+    {
+      "image": "images/service-2.jpg",
+      "caption": "Transportation Research Part E"
+    },
+    {
+      "image": "images/service-3.png",
+      "caption": ""
+    }
+  ]
+}
