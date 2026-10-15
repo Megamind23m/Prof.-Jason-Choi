@@ -1,115 +1,169 @@
 // Renders every section from the JSON files in /content.
 // To change text, edit those files (or use the site editor), not this script.
 
-const FILES = ["profile", "news", "research", "publications", "team", "impact", "teaching", "service"];
+const FILES = ["profile", "news", "research", "publications", "team", "impact", "teaching", "service", "guide"];
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const FINE_POINTER = matchMedia("(pointer: fine)").matches;
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch { /* private mode */ } },
+};
 
 async function load() {
   const data = {};
   await Promise.all(FILES.map(async (f) => {
-    const res = await fetch(`content/${f}.json`, { cache: "no-cache" });
-    data[f] = await res.json();
+    try {
+      const res = await fetch(`content/${f}.json`, { cache: "no-cache" });
+      data[f] = await res.json();
+    } catch (e) {
+      if (f === "guide") data[f] = { enabled: false, tips: [] }; else throw e;
+    }
   }));
   return data;
 }
 
-function figure(p, cls = "") {
+function figure(p, cls = "", style = "") {
   if (!p || !p.image) return "";
-  return `<figure class="${cls}" data-full="${esc(p.image)}" data-caption="${esc(p.caption)}">
+  return `<figure class="${cls}" ${style ? `style="${style}"` : ""} data-full="${esc(p.image)}" data-caption="${esc(p.caption)}">
     <img src="${esc(p.image)}" alt="${esc(p.caption || "")}" loading="lazy">
     ${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ""}
   </figure>`;
 }
 
-// Wraps each letter in a span so the name can rise in letter by letter
-function splitLetters(text, start = 0) {
-  let i = start;
-  return text.split(" ").map((word) => `<span class="word">${[...word].map((ch) =>
-    `<span class="ch" style="--i:${i++}">${esc(ch)}</span>`).join("")}</span>`).join(" ");
-}
-
-function renderProfile({ profile: p, impact, service }) {
-  $("hero-affiliation").textContent = p.affiliation;
-  const n = p.name.replace(/\s/g, "").length;
-  $("hero-name").innerHTML = `${splitLetters(p.name)} <span class="pref">${splitLetters(`(${p.preferred_name})`, n)}</span>`;
-  $("hero-positions").innerHTML = p.positions.map((x, i) => `<li style="--d:${0.9 + i * 0.12}s">${esc(x)}</li>`).join("");
+// Hero -------------------------------------------------------------------
+function renderHero({ profile: p }) {
+  $("hero-pill").textContent = `Professor · ${p.affiliation}`;
+  const [first, ...rest] = p.name.split(" ");
+  $("hero-name").innerHTML = `<span class="line">${esc(first)}</span> <span class="line">${esc(rest.join(" "))}</span> <em class="line">(${esc(p.preferred_name)})</em>`;
+  $("hero-intro").textContent = p.intro || "";
   $("tagline-prefix").textContent = p.tagline_prefix || "";
   $("hero-photo").src = p.photo;
-  $("hero-badge").innerHTML = p.badge ? `<span>${esc(p.badge)}</span>` : "";
+  $("hero-photo").alt = `Portrait of ${p.name}`;
+  $("hero-badge").textContent = p.badge || "";
   $("hero-badge").hidden = !p.badge;
+  $("board-title").textContent = p.whiteboard_title || "";
+  $("board-lines").innerHTML = (p.whiteboard_lines || []).map((l, i) => {
+    const [a, b] = l.split("→");
+    return `<li style="--i:${i}"><span class="hw">${esc(a.trim())}</span>${b ? `<span class="arrow">→</span><span class="hw sm">${esc(b.trim())}</span>` : ""}</li>`;
+  }).join("");
   const scholar = p.links.find((l) => /scholar/i.test(l.label));
   $("hero-actions").innerHTML =
-    `<a class="btn gold" href="mailto:${esc(p.email)}">Get in touch</a>` +
-    (scholar ? `<a class="btn ghost light" href="${esc(scholar.url)}" target="_blank" rel="noopener">Google Scholar</a>` : "") +
-    `<a class="btn ghost light" href="#publications">Publications</a>`;
+    `<a class="btn dark" href="#research">Explore research</a>` +
+    (scholar ? `<a class="btn outline" href="${esc(scholar.url)}" target="_blank" rel="noopener">Google Scholar</a>` : "") +
+    `<a class="btn outline" href="mailto:${esc(p.email)}">Email</a>`;
+}
 
+function renderStrip({ profile: p, impact }) {
   $("metrics").innerHTML = impact.metrics.map((m, i) =>
-    `<div style="--d:${1.2 + i * 0.1}s"><dt data-count="${esc(m.value)}">0</dt><dd>${esc(m.label)}</dd></div>`).join("");
-
+    `<div class="reveal" style="--stagger:${i}"><dt data-count="${esc(m.value)}">0</dt><dd>${esc(m.label)}</dd></div>`).join("");
   $("honours").innerHTML = (p.honours || []).map((h, i) =>
     `<div class="honour reveal" style="--stagger:${i}"><span>${esc(h.role)}</span><strong>${esc(h.outlet)}</strong></div>`).join("");
+}
 
+// About ------------------------------------------------------------------
+const REEL_ART = [
+  // 1 technology: a chip wired to blocks in a chain
+  `<svg viewBox="0 0 320 180"><g class="r-wires"><path d="M160 90H60M160 90h100M160 90V30M160 90v60"/></g>
+   <g class="r-blocks"><rect x="24" y="74" width="34" height="32" rx="6"/><rect x="262" y="74" width="34" height="32" rx="6"/><rect x="144" y="2" width="32" height="28" rx="6"/><rect x="144" y="150" width="32" height="28" rx="6"/></g>
+   <rect x="128" y="60" width="64" height="60" rx="12" class="r-core"/><text x="160" y="96" class="r-label">AI</text>
+   <circle r="4" class="r-pkt"><animateMotion dur="2.4s" repeatCount="indefinite" path="M60 90H260"/></circle>
+   <circle r="4" class="r-pkt"><animateMotion dur="2s" repeatCount="indefinite" path="M160 30V150"/></circle></svg>`,
+  // 2 sustainability: rotating loop around a leaf
+  `<svg viewBox="0 0 320 180"><g class="r-spin"><path d="M160 22a68 68 0 0 1 64 46" class="r-arc"/><path d="M226 112a68 68 0 0 1-64 46" class="r-arc"/><path d="M98 112a68 68 0 0 1 0-44" class="r-arc"/>
+   <path d="M218 58l8 12 10-10M168 160l-12-4 6-12M94 60l2 12 12-2" class="r-arrow"/></g>
+   <path d="M160 124c-26-14-32-40-14-62 22 6 30 36 14 62z" class="r-leaf"/><path d="M160 124c2-18 6-34 0-52" class="r-vein"/></svg>`,
+  // 3 consumers: shoppers and rising bars
+  `<svg viewBox="0 0 320 180"><g class="r-people"><circle cx="70" cy="62" r="14"/><path d="M44 120c0-22 12-34 26-34s26 12 26 34"/><circle cx="112" cy="70" r="11"/><path d="M92 120c0-18 9-27 20-27s20 9 20 27"/></g>
+   <g class="r-bars"><rect x="176" y="96" width="22" height="40" rx="4"/><rect x="206" y="76" width="22" height="60" rx="4"/><rect x="236" y="52" width="22" height="84" rx="4"/><rect x="266" y="30" width="22" height="106" rx="4"/></g>
+   <path d="M168 140h132" class="r-axis"/></svg>`,
+  // 4 coordination: partners linked by a contract, parcels flowing
+  `<svg viewBox="0 0 320 180"><path d="M60 50L160 90L260 50M60 140L160 90L260 140" class="r-link"/>
+   <g class="r-nodes"><circle cx="60" cy="50" r="18"/><circle cx="260" cy="50" r="18"/><circle cx="60" cy="140" r="18"/><circle cx="260" cy="140" r="18"/></g>
+   <rect x="138" y="64" width="44" height="54" rx="6" class="r-doc"/><path d="M148 80h24M148 90h24M148 100h14" class="r-docline"/>
+   <circle r="4" class="r-pkt"><animateMotion dur="2.2s" repeatCount="indefinite" path="M60 50L160 90L260 140"/></circle>
+   <circle r="4" class="r-pkt"><animateMotion dur="2.6s" repeatCount="indefinite" path="M260 50L160 90L60 140"/></circle></svg>`,
+];
+
+function renderAbout({ profile: p, research: r }) {
   $("bio").textContent = p.bio;
-  $("about-quick").innerHTML = `<h3>At a glance</h3><ul>
-      ${p.positions.map((x) => `<li>${esc(x)}</li>`).join("")}
-      <li>${esc(p.affiliation)}</li>
-      ${service.roles.slice(0, 2).map((r) => `<li>${esc(r.role)}, <em>${esc(r.detail.split(";")[0])}</em></li>`).join("")}
-    </ul>`;
+  const areas = r.interests;
+  $("reel-stage").innerHTML = areas.map((a, i) => `
+    <div class="reel-slide${i === 0 ? " on" : ""}">${REEL_ART[i % REEL_ART.length]}
+      <p class="reel-cap"><strong>${esc(a.title)}</strong>${esc(a.headline || a.description)}</p></div>`).join("");
+  $("reel-list").innerHTML = areas.map((a, i) => `
+    <li><button class="${i === 0 ? "on" : ""}" data-i="${i}"><span class="n">0${i + 1}</span>${esc(a.title)}<span class="bar"></span></button></li>`).join("");
+  const slides = [...document.querySelectorAll(".reel-slide")];
+  const btns = [...document.querySelectorAll(".reel-list button")];
+  let cur = 0, timer;
+  const show = (i) => {
+    cur = i;
+    slides.forEach((s, k) => s.classList.toggle("on", k === i));
+    btns.forEach((b, k) => { b.classList.remove("on"); void b.offsetWidth; b.classList.toggle("on", k === i); });
+  };
+  const auto = () => { clearInterval(timer); if (!REDUCE) timer = setInterval(() => show((cur + 1) % slides.length), 6000); };
+  $("reel-list").onclick = (e) => { const b = e.target.closest("button"); if (b) { show(+b.dataset.i); auto(); } };
+  auto();
 
   const stops = p.journey || [];
   $("journey").innerHTML = `
     <svg class="journey-line" viewBox="0 0 1000 4" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="2" x2="1000" y2="2"/></svg>
     <ol>${stops.map((s, i) => `
-      <li class="stop" style="--stagger:${i}">
-        <span class="dot"></span>
-        <strong>${esc(s.short)}</strong>
-        <span class="place">${esc(s.place)}</span>
-        <span class="note">${esc(s.note)}</span>
-      </li>`).join("")}</ol>`;
-
-  $("contact-main").innerHTML = `
-    <p class="contact-line"><span>Email</span><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></p>
-    <p class="contact-line"><span>Phone</span>${esc(p.phone)}</p>
-    <p class="contact-line"><span>Address</span>${esc(p.address)}</p>
-    <div class="link-list">${p.links.map((l) => `<a class="btn ghost" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join("")}</div>`;
-  $("contact-ids").innerHTML = `<h3>Researcher identifiers</h3><ul>
-      ${p.identifiers.map((i) => `<li><span class="muted small">${esc(i.label)}</span><br>${esc(i.value)}</li>`).join("")}
-    </ul>`;
-  $("footer-updated").textContent = `© ${new Date().getFullYear()} ${p.name}. Last updated ${p.last_updated}.`;
+      <li class="stop" style="--stagger:${i}"><span class="dot"></span><strong>${esc(s.short)}</strong>
+        <span class="place">${esc(s.place)}</span><span class="note">${esc(s.note)}</span></li>`).join("")}</ol>`;
 }
 
-function renderNews({ news }) {
-  $("news").innerHTML = news.map((n, i) => `
-    <article class="news-item reveal tilt" style="--stagger:${i}">
-      ${n.image ? `<div class="news-img"><img src="${esc(n.image)}" alt="" loading="lazy"></div>` : ""}
-      <div class="news-body">
-        <span class="news-date">${esc(n.date)}</span>
-        <h3>${n.link ? `<a href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.title)}</a>` : esc(n.title)}</h3>
-        <p>${esc(n.text)}</p>
-      </div>
-    </article>`).join("");
+// Featured covers ----------------------------------------------------------
+const COVER_COLORS = ["#16244a", "#1d5552", "#3a2350", "#6b2d2d", "#1f3a5f", "#3d4a22", "#4a2f14", "#2b2f4f"];
+
+function titleOf(p) {
+  if (p.title) return p.title;
+  // APA style: "Authors (2025). Title. JOURNAL"
+  const apa = p.citation.match(/\(\d{4}\)\.\s*(.+?[.?!])\s/);
+  if (apa) return apa[1].replace(/\.$/, "");
+  // "Surname, I., I. Surname. Title. Journal, 12(3), 1-20, 2024": the title is the
+  // longest sentence that is not the journal (author names split into short pieces)
+  const j = (p.journal || "").toLowerCase();
+  const segs = p.citation.split(/(?<=[.?!])\s+/).map((s) => s.replace(/\.$/, ""))
+    .filter((s) => s.split(" ").length >= 4 && !(j && s.toLowerCase().includes(j)));
+  // A question title and its subtitle arrive as two sentences: join them back
+  const joined = segs.map((s, i) => (i > 0 && segs[i - 1].endsWith("?") ? `${segs[i - 1]} ${s}` : s));
+  return joined.sort((a, b) => b.length - a.length)[0] || p.citation;
 }
 
-const ICONS = [
-  // chip: disruptive technologies
-  `<svg viewBox="0 0 48 48"><rect x="12" y="12" width="24" height="24" rx="4"/><rect x="19" y="19" width="10" height="10" rx="1"/><path d="M18 6v6M24 6v6M30 6v6M18 36v6M24 36v6M30 36v6M6 18h6M6 24h6M6 30h6M36 18h6M36 24h6M36 30h6"/></svg>`,
-  // circular arrows: sustainability
-  `<svg viewBox="0 0 48 48"><path d="M38 20a15 15 0 0 0-27-5"/><path d="M10 28a15 15 0 0 0 27 5"/><path d="M11 7v8h8M37 41v-8h-8"/><path d="M24 31c-4-3-6-6-6-9a6 6 0 0 1 12 0c0 3-2 6-6 9z"/></svg>`,
-  // people + cart: operations-marketing
-  `<svg viewBox="0 0 48 48"><circle cx="17" cy="13" r="5"/><path d="M8 30c0-6 4-9 9-9s9 3 9 9"/><path d="M27 24h4l3 12h9l3-9H33"/><circle cx="35" cy="40" r="2"/><circle cx="43" cy="40" r="2"/></svg>`,
-  // network: coordination
-  `<svg viewBox="0 0 48 48"><circle cx="10" cy="24" r="5"/><circle cx="38" cy="10" r="5"/><circle cx="38" cy="38" r="5"/><circle cx="26" cy="24" r="3"/><path d="M15 24h8M28 22l6-9M28 26l6 9"/></svg>`,
-];
+function renderFeatured({ publications }) {
+  const top = publications.filter((p) => !p.hidden && p.category === CATS[0]).sort((a, b) => b.year - a.year).slice(0, 8);
+  $("featured-list").innerHTML = top.map((p, i) => `
+    <a class="book reveal" style="--stagger:${i % 4}; --c:${COVER_COLORS[i % COVER_COLORS.length]}" ${p.link ? `href="${esc(p.link)}" target="_blank" rel="noopener"` : `href="#publications"`}>
+      <span class="book-j">${esc(p.journal)}</span>
+      <span class="book-t">${esc(titleOf(p))}</span>
+      <span class="book-y">${esc(p.year)}</span>
+      <span class="book-read">Read &rarr;</span>
+    </a>`).join("");
+}
 
-function renderResearch({ research: r }) {
-  $("interests").innerHTML = r.interests.map((x, i) => `
-    <div class="interest reveal tilt" style="--stagger:${i}">
-      <div class="icon">${ICONS[i % ICONS.length]}</div>
-      <span class="num">0${i + 1}</span><h3>${esc(x.title)}</h3><p>${esc(x.description)}</p>
-    </div>`).join("");
+// Research -----------------------------------------------------------------
+function matchesArea(p, keywords) {
+  const t = p.citation.toLowerCase();
+  return keywords.some((k) => {
+    const kk = k.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp(k.length <= 3 ? `\\b${kk}\\b` : `\\b${kk}`).test(t);
+  });
+}
+
+function renderResearch({ research: r, publications }) {
+  const pubs = publications.filter((p) => !p.hidden && p.category !== "Books").sort((a, b) => b.year - a.year);
+  $("areas").innerHTML = r.interests.map((a, i) => {
+    const mine = pubs.filter((p) => matchesArea(p, a.keywords || []));
+    return `<div class="area reveal" style="--stagger:${i}">
+      <span class="area-n">0${i + 1}</span>
+      <h3>${esc(a.title)}</h3>
+      <p class="area-d">${esc(a.description)}</p>
+      <p class="area-k">Recent papers <span>${mine.length}</span></p>
+      <ul>${mine.slice(0, 4).map((p) => `<li>${p.link ? `<a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(titleOf(p))}</a>` : esc(titleOf(p))}<small>${esc(p.journal)} · ${p.year}</small></li>`).join("")}</ul>
+    </div>`;
+  }).join("");
   const [first, ...rest] = r.statement;
   $("statement").innerHTML = `<p>${esc(first)}</p>
     <div class="more" hidden>${rest.map((x) => `<p>${esc(x)}</p>`).join("")}</div>
@@ -125,7 +179,19 @@ function renderResearch({ research: r }) {
   $("vision-band").hidden = !r.vision;
 }
 
-// Publications ---------------------------------------------------------
+function renderNews({ news }) {
+  $("news").innerHTML = news.map((n, i) => `
+    <article class="news-item reveal" style="--stagger:${i}">
+      ${n.image ? `<div class="news-img"><img src="${esc(n.image)}" alt="" loading="lazy"></div>` : ""}
+      <div class="news-body">
+        <span class="news-date">${esc(n.date)}</span>
+        <h3>${n.link ? `<a href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.title)}</a>` : esc(n.title)}</h3>
+        <p>${esc(n.text)}</p>
+      </div>
+    </article>`).join("");
+}
+
+// Publications ---------------------------------------------------------------
 const CATS = ["UTD24 / FT50 journals", "Other ABS 4* journals", "Other selected journals", "Books"];
 const NAME_RE = /(T\.?\s?-?\s?M\.?,?\s?Choi|TM Choi|Choi,?\s?T\.(?:\s?-?\s?M\.)?|Choi,?\s?T\.?\s?M\.?)/g;
 const pubState = { cat: "All", q: "", journal: "", all: false };
@@ -154,12 +220,10 @@ function renderPubs(all) {
     .filter((p) => !pubState.journal || p.journal === pubState.journal)
     .filter((p) => !q || p.citation.toLowerCase().includes(q))
     .sort((a, b) => b.year - a.year);
-  const LIMIT = 12;
-  const shown = pubState.all || q || pubState.journal ? list : list.slice(0, LIMIT);
+  const shown = pubState.all || q || pubState.journal ? list : list.slice(0, 12);
   const years = [...new Set(shown.map((p) => p.year))];
   const box = $("pub-list");
-  box.classList.remove("swap");
-  void box.offsetWidth; // restart the fade-in
+  box.classList.remove("swap"); void box.offsetWidth;
   box.innerHTML = years.map((y) => `
     <div class="year-group"><div class="year-label">${y}</div>
       <div>${shown.filter((p) => p.year === y).map(pubHtml).join("")}</div></div>`).join("")
@@ -169,26 +233,20 @@ function renderPubs(all) {
   $("pub-more").hidden = shown.length === list.length;
 }
 
-function renderPubChart(pubs) {
+function setupPubs({ publications: all }) {
+  const pubs = all.filter((p) => !p.hidden);
   const byYear = {};
   pubs.forEach((p) => { byYear[p.year] = (byYear[p.year] || 0) + 1; });
-  const years = Object.keys(byYear).sort();
-  const max = Math.max(...Object.values(byYear));
-  const top = pubs.filter((p) => p.category === CATS[0]).length;
+  const years = Object.keys(byYear).sort(), max = Math.max(...Object.values(byYear));
   $("pub-chart").innerHTML = `
     <div class="chart-stats">
       <div><strong data-count="${pubs.length}">0</strong><span>listed publications</span></div>
-      <div><strong data-count="${top}">0</strong><span>in UTD24 / FT50 journals</span></div>
+      <div><strong data-count="${pubs.filter((p) => p.category === CATS[0]).length}">0</strong><span>in UTD24 / FT50 journals</span></div>
     </div>
     <div class="bars">${years.map((y, i) => `
       <div class="bar" style="--h:${(byYear[y] / max) * 100}%; --stagger:${i}">
-        <span class="bar-val">${byYear[y]}</span><span class="bar-fill"></span><span class="bar-year">${y}</span>
-      </div>`).join("")}</div>`;
-}
+        <span class="bar-val">${byYear[y]}</span><span class="bar-fill"></span><span class="bar-year">${y}</span></div>`).join("")}</div>`;
 
-function setupPubs({ publications: all }) {
-  const pubs = all.filter((p) => !p.hidden);
-  renderPubChart(pubs);
   const counts = (c) => pubs.filter((p) => c === "All" || p.category === c).length;
   $("pub-tabs").innerHTML = ["All", ...CATS].filter((c) => counts(c)).map((c) =>
     `<button class="tab" role="tab" data-cat="${esc(c)}" aria-selected="${c === "All"}">${esc(c)}<span>${counts(c)}</span></button>`).join("");
@@ -206,46 +264,49 @@ function setupPubs({ publications: all }) {
   $("pub-sync").innerHTML = `<span class="live-dot"></span>New publications are added automatically from Google Scholar and OpenAlex every week.`;
   renderPubs(all);
 
-  // Journal marquee, most frequent first; it grows as new papers arrive
   const freq = {};
   pubs.forEach((p) => { if (p.journal) freq[p.journal] = (freq[p.journal] || 0) + 1; });
-  const names = Object.keys(freq).sort((a, b) => freq[b] - freq[a]);
-  const row = names.map((j) => `<span class="mq-item">${esc(j)}</span><span class="mq-sep">✦</span>`).join("");
+  const row = Object.keys(freq).sort((a, b) => freq[b] - freq[a])
+    .map((j) => `<span class="mq-item">${esc(j)}</span><span class="mq-sep">✦</span>`).join("");
   $("marquee").innerHTML = row + row;
 }
 
-// Other sections -------------------------------------------------------
-function renderTeam({ team }) {
+// Other sections -------------------------------------------------------------
+function renderRest({ team, impact, teaching, service, profile: p }) {
   $("team-groups").innerHTML = team.groups.map((g, gi) => `
     <div class="team-group card reveal" style="--stagger:${gi}"><h3>${esc(g.title)} <span class="count">${g.members.length}</span></h3><ul class="chips">
-      ${g.members.map((m, i) => `<li style="--i:${i}">${esc(m.name)}${m.note ? `<small>${esc(m.note)}</small>` : ""}</li>`).join("")}
+      ${g.members.map((m) => `<li><span class="ini">${esc(m.name.split(" ").map((w) => w[0]).slice(0, 2).join(""))}</span>${esc(m.name)}${m.note ? `<small>${esc(m.note)}</small>` : ""}</li>`).join("")}
     </ul></div>`).join("");
   const photos = team.photos.map((x) => figure(x)).join("");
   $("team-photos").innerHTML = `<div class="pm-track">${photos}${photos}</div>`;
-}
 
-function renderImpact({ impact }) {
   $("highlights").innerHTML = impact.highlights.map((h, i) => `<li class="reveal" style="--stagger:${i}">${esc(h)}</li>`).join("");
-  $("projects").innerHTML = [...impact.projects].sort((a, b) => b.year - a.year).map((p) => `
-    <li class="project reveal"><span class="yr">${esc(p.year)}</span>
-      <div><h4>${esc(p.title)}</h4><p>${esc(p.amount)} · ${esc(p.funder)}${p.note ? ` · ${esc(p.note)}` : ""}</p></div>
-      <span class="role ${/^PI/.test(p.role) ? "pi" : ""}">${esc(p.role)}</span></li>`).join("");
-}
+  $("projects").innerHTML = [...impact.projects].sort((a, b) => b.year - a.year).map((pr) => `
+    <li class="project reveal"><span class="yr">${esc(pr.year)}</span>
+      <div><h4>${esc(pr.title)}</h4><p>${esc(pr.amount)} · ${esc(pr.funder)}${pr.note ? ` · ${esc(pr.note)}` : ""}</p></div>
+      <span class="role ${/^PI/.test(pr.role) ? "pi" : ""}">${esc(pr.role)}</span></li>`).join("");
 
-function renderTeaching({ teaching }) {
   $("courses").innerHTML = teaching.courses.map((c, i) => `
-    <div class="course reveal tilt" style="--stagger:${i}"><h3>${esc(c.title)}</h3><span class="role">${esc(c.level)}</span></div>`).join("");
-  $("teaching-photos").innerHTML = teaching.photos.map((x, i) => figure({ ...x }, `reveal`).replace("<figure ", `<figure style="--stagger:${i % 4}" `)).join("");
-}
+    <div class="course reveal" style="--stagger:${i}"><span class="role">${esc(c.level)}</span><h3>${esc(c.title)}</h3></div>`).join("");
+  $("teaching-photos").innerHTML = teaching.photos.map((x, i) => figure(x, "reveal", `--stagger:${i % 4}`)).join("");
 
-function renderService({ service }) {
   $("roles").innerHTML = service.roles.map((r, i) => `<div class="reveal" style="--stagger:${i}"><dt>${esc(r.role)}</dt><dd>${esc(r.detail)}</dd></div>`).join("");
-  $("covers").innerHTML = service.images.map((x, i) => figure(x, "cover reveal").replace("<figure ", `<figure style="--stagger:${i}" `)).join("");
+  $("covers").innerHTML = service.images.map((x, i) => figure(x, "reveal", `--stagger:${i}`)).join("");
+
+  $("contact-main").innerHTML = `
+    <p class="contact-line"><span>Email</span><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></p>
+    <p class="contact-line"><span>Phone</span>${esc(p.phone)}</p>
+    <p class="contact-line"><span>Address</span>${esc(p.address)}</p>
+    <div class="link-list">${p.links.map((l) => `<a class="btn outline" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join("")}</div>`;
+  $("contact-ids").innerHTML = `<h3>Researcher identifiers</h3><ul>
+      ${p.identifiers.map((i) => `<li><span class="muted small">${esc(i.label)}</span><br>${esc(i.value)}</li>`).join("")}</ul>`;
+  $("footer-updated").textContent = `© ${new Date().getFullYear()} ${p.name}. Last updated ${p.last_updated}.`;
 }
 
-// Interactions ---------------------------------------------------------
+// Interactions -----------------------------------------------------------------
 function setupLightbox() {
   const lb = $("lightbox");
+  const close = () => { lb.classList.remove("open"); setTimeout(() => (lb.hidden = true), 250); };
   document.addEventListener("click", (e) => {
     const f = e.target.closest("figure[data-full]");
     if (f) {
@@ -253,66 +314,69 @@ function setupLightbox() {
       lb.querySelector("figcaption").textContent = f.dataset.caption || "";
       lb.hidden = false;
       requestAnimationFrame(() => lb.classList.add("open"));
-    } else if (e.target === lb || e.target.closest(".lb-close")) {
-      lb.classList.remove("open"); setTimeout(() => (lb.hidden = true), 250);
-    }
+    } else if (e.target === lb || e.target.closest(".lb-close")) close();
   });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") { lb.classList.remove("open"); lb.hidden = true; } });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !lb.hidden) close(); });
 }
 
+const SECTIONS = [["top", "Home"], ["about", "About"], ["featured", "Featured"], ["research", "Research"],
+  ["publications", "Publications"], ["team", "Team"], ["impact", "Impact"], ["service", "Service"], ["contact", "Contact"]];
+
 function setupNav() {
-  const toggle = document.querySelector(".nav-toggle");
-  const nav = $("nav");
-  toggle.onclick = () => {
-    const open = nav.classList.toggle("open");
-    toggle.setAttribute("aria-expanded", open);
-  };
+  const toggle = document.querySelector(".nav-toggle"), nav = $("nav");
+  toggle.onclick = () => toggle.setAttribute("aria-expanded", nav.classList.toggle("open"));
   nav.onclick = (e) => { if (e.target.tagName === "A") nav.classList.remove("open"); };
-  const header = document.querySelector(".site-header");
-  const bar = $("progress"), top = $("to-top");
+
+  $("dots").innerHTML = SECTIONS.map(([id, label]) =>
+    `<a href="#${id === "top" ? "top" : id}" data-id="${id}"><span class="dot-label">${label}</span></a>`).join("");
+
+  const header = document.querySelector(".site-header"), bar = $("progress"), top = $("to-top");
   const onScroll = () => {
-    const y = window.scrollY, max = document.documentElement.scrollHeight - innerHeight;
-    header.classList.toggle("scrolled", y > 40);
+    const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+    header.classList.toggle("scrolled", y > 30);
     bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
     top.classList.toggle("show", y > innerHeight);
   };
-  window.addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("scroll", onScroll, { passive: true });
   onScroll();
-  const links = [...nav.querySelectorAll("a")];
+
+  const links = [...nav.querySelectorAll("a")], dots = [...$("dots").querySelectorAll("a")];
   const spy = new IntersectionObserver((entries) => entries.forEach((en) => {
-    if (en.isIntersecting) links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === `#${en.target.id}`));
+    if (!en.isIntersecting) return;
+    const id = en.target.id === "hero" ? "top" : en.target.id;
+    links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === `#${id}`));
+    const sec = en.target.dataset.section || id;
+    dots.forEach((d) => d.classList.toggle("active", d.dataset.id === sec));
+    document.dispatchEvent(new CustomEvent("section", { detail: sec }));
   }), { rootMargin: "-45% 0px -50% 0px" });
-  links.forEach((l) => { const s = document.querySelector(l.getAttribute("href")); if (s) spy.observe(s); });
+  document.querySelectorAll("main > section[id]").forEach((s) => spy.observe(s));
 }
 
 function countUp(el, dur = 1600) {
-  const raw = el.dataset.count;
-  const target = parseInt(raw.replace(/,/g, ""), 10);
+  const raw = el.dataset.count, target = parseInt(raw.replace(/,/g, ""), 10);
   if (!target || REDUCE) { el.textContent = raw; return; }
   const t0 = performance.now();
   const step = (t) => {
-    const k = Math.min(1, (t - t0) / dur), v = Math.round(target * (1 - Math.pow(1 - k, 4)));
-    el.textContent = v.toLocaleString("en-GB");
+    const k = Math.min(1, (t - t0) / dur);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - k, 4))).toLocaleString("en-GB");
     if (k < 1) requestAnimationFrame(step); else el.textContent = raw;
   };
   requestAnimationFrame(step);
 }
 
 function setupReveal() {
-  const targets = document.querySelectorAll(".reveal, .section-title, .journey, .pub-chart, .sub-title");
+  const targets = document.querySelectorAll(".reveal, .big-title, .journey, .pub-chart, .sub-title, .eyebrow, .page-head h2");
   if (REDUCE) { targets.forEach((el) => el.classList.add("in")); document.querySelectorAll("[data-count]").forEach((el) => countUp(el)); return; }
   const io = new IntersectionObserver((entries) => entries.forEach((en) => {
     if (!en.isIntersecting) return;
     en.target.classList.add("in");
+    if (en.target.matches("[data-count]")) countUp(en.target);
     en.target.querySelectorAll("[data-count]").forEach((el) => countUp(el));
     io.unobserve(en.target);
   }), { threshold: 0.15 });
   targets.forEach((el) => io.observe(el));
-  // Hero numbers start after the intro animation
-  setTimeout(() => document.querySelectorAll("#metrics [data-count]").forEach((el) => countUp(el, 2000)), 1100);
 }
 
-// Words of the vision statement light up as it scrolls through the screen
 function setupVision() {
   const words = [...document.querySelectorAll("#vision span")];
   if (!words.length) return;
@@ -328,10 +392,8 @@ function setupVision() {
   update();
 }
 
-// Cycles through the hero words with a soft fade and rise
 function setupTyped({ profile }) {
-  const words = profile.tagline_words || [];
-  const el = $("typed");
+  const words = profile.tagline_words || [], el = $("typed");
   if (!words.length) return;
   el.innerHTML = words.map((w, i) => `<span class="${i === 0 ? "on" : ""}">${esc(w)}</span>`).join("");
   if (REDUCE || words.length < 2) return;
@@ -346,133 +408,72 @@ function setupTyped({ profile }) {
   }, 2600);
 }
 
-// Cards lean toward the pointer; a soft light follows it
-function setupPointerEffects() {
+// The hero scene leans gently with the pointer (depth layers)
+function setupParallax() {
   if (!FINE_POINTER || REDUCE) return;
-  document.addEventListener("pointermove", (e) => {
-    const card = e.target.closest(".tilt");
-    document.querySelectorAll(".tilt.tilting").forEach((t) => { if (t !== card) { t.classList.remove("tilting"); t.style.transform = ""; } });
-    if (card) {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      card.classList.add("tilting");
-      card.style.transform = `perspective(800px) rotateX(${(0.5 - y) * 3}deg) rotateY(${(x - 0.5) * 4}deg) translateY(-3px)`;
-      card.style.setProperty("--mx", `${x * 100}%`);
-      card.style.setProperty("--my", `${y * 100}%`);
-    }
-  });
-
-  const portrait = $("portrait");
   const hero = $("hero");
-  const glow = $("cursor-glow");
+  const layers = [[".window", 10], [".frame", 18], [".board", 14], [".desk", 24], [".plant", 28]]
+    .map(([s, d]) => [hero.querySelector(s), d]).filter(([el]) => el);
   hero.addEventListener("pointermove", (e) => {
     const r = hero.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-    portrait.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${-y * 4}deg)`;
-    glow.style.opacity = 1;
-    glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    layers.forEach(([el, d]) => (el.style.translate = `${-x * d}px ${-y * d * 0.6}px`));
   });
-  hero.addEventListener("pointerleave", () => { portrait.style.transform = ""; glow.style.opacity = 0; });
+  hero.addEventListener("pointerleave", () => layers.forEach(([el]) => (el.style.translate = "")));
 }
 
-// Supply-chain network in the hero: drifting nodes, glowing parcels travelling
-// along the links, and links that reach out to the pointer.
-function heroNetwork() {
-  const c = $("hero-net"), ctx = c.getContext("2d");
-  const hero = $("hero");
-  let w, h, nodes = [], parcels = [], mouse = null, visible = true;
-  const resize = () => {
-    const r = Math.min(devicePixelRatio || 1, 2);
-    w = c.offsetWidth; h = c.offsetHeight;
-    c.width = w * r; c.height = h * r; ctx.setTransform(r, 0, 0, r, 0, 0);
-    const n = Math.round(Math.min(85, w * h / 13000));
-    nodes = Array.from({ length: n }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3,
-      r: Math.random() * 1.8 + .8, hub: Math.random() < .12, p: Math.random() * Math.PI * 2,
-    }));
-    parcels = [];
+// The courier: a small truck that drives a little and gives a tip per section
+function setupGuide({ guide }) {
+  if (!guide || !guide.enabled || !(guide.tips || []).length) return;
+  const el = $("guide"), bubble = $("guide-bubble"), toggle = $("guide-toggle");
+  const tips = Object.fromEntries(guide.tips.map((t) => [t.section, t.text]));
+  let hidden = store.get("guide-hidden") === "1";
+  const apply = () => {
+    el.hidden = hidden;
+    toggle.textContent = hidden ? "Show guide" : "Hide guide";
+    toggle.classList.toggle("off", hidden);
   };
-  const LINK = 150;
-  const draw = (t) => {
-    ctx.clearRect(0, 0, w, h);
-    const links = [];
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (d < LINK) {
-          links.push([a, b]);
-          ctx.strokeStyle = `rgba(214, 178, 106, ${0.2 * (1 - d / LINK)})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        }
-      }
-      if (mouse) {
-        const d = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-        if (d < 200) {
-          ctx.strokeStyle = `rgba(120, 220, 210, ${0.35 * (1 - d / 200)})`;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
-          a.x += (mouse.x - a.x) * 0.002; a.y += (mouse.y - a.y) * 0.002;
-        }
-      }
-    }
-    // Spawn parcels on random links
-    if (!REDUCE && links.length && parcels.length < 22 && Math.random() < 0.18) {
-      const [a, b] = links[(Math.random() * links.length) | 0];
-      parcels.push(Math.random() < .5 ? { a, b, k: 0 } : { a: b, b: a, k: 0 });
-    }
-    parcels = parcels.filter((pc) => {
-      pc.k += 0.012;
-      const x = pc.a.x + (pc.b.x - pc.a.x) * pc.k, y = pc.a.y + (pc.b.y - pc.a.y) * pc.k;
-      const g = ctx.createRadialGradient(x, y, 0, x, y, 7);
-      g.addColorStop(0, "rgba(255, 226, 160, .95)"); g.addColorStop(1, "rgba(255, 226, 160, 0)");
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2); ctx.fill();
-      return pc.k < 1;
-    });
-    for (const a of nodes) {
-      const pulse = a.hub ? 1 + Math.sin(t / 600 + a.p) * .5 : 1;
-      if (a.hub) {
-        ctx.strokeStyle = `rgba(120, 220, 210, ${0.25 + 0.15 * Math.sin(t / 600 + a.p)})`;
-        ctx.beginPath(); ctx.arc(a.x, a.y, 6 * pulse + 3, 0, Math.PI * 2); ctx.stroke();
-      }
-      ctx.fillStyle = a.hub ? "rgba(140, 230, 220, .9)" : "rgba(240, 222, 180, .75)";
-      ctx.beginPath(); ctx.arc(a.x, a.y, a.hub ? a.r + 1.5 : a.r, 0, Math.PI * 2); ctx.fill();
-      if (!REDUCE) {
-        a.x += a.vx; a.y += a.vy;
-        if (a.x < 0 || a.x > w) a.vx *= -1;
-        if (a.y < 0 || a.y > h) a.vy *= -1;
-      }
-    }
-    if (!REDUCE && visible) requestAnimationFrame(draw);
+  toggle.hidden = false;
+  toggle.onclick = () => { hidden = !hidden; store.set("guide-hidden", hidden ? "1" : "0"); apply(); };
+  apply();
+  let last = "", quiet;
+  const say = (sec) => {
+    const text = tips[sec];
+    if (!text || sec === last) return;
+    last = sec;
+    clearTimeout(quiet);
+    el.classList.remove("drive", "talk"); void el.offsetWidth;
+    el.classList.add("drive");
+    setTimeout(() => { bubble.textContent = text; el.classList.add("talk"); }, REDUCE ? 0 : 650);
+    // Let the bubble fade so it never sits on top of the text for long
+    quiet = setTimeout(() => el.classList.remove("talk"), 7000);
   };
-  resize(); requestAnimationFrame(draw);
-  addEventListener("resize", () => { resize(); if (REDUCE) requestAnimationFrame(draw); });
-  hero.addEventListener("pointermove", (e) => { const r = c.getBoundingClientRect(); mouse = { x: e.clientX - r.left, y: e.clientY - r.top }; });
-  hero.addEventListener("pointerleave", () => (mouse = null));
-  // Pause the animation while the hero is off screen
-  new IntersectionObserver(([en]) => {
-    const was = visible; visible = en.isIntersecting;
-    if (visible && !was && !REDUCE) requestAnimationFrame(draw);
-  }).observe(hero);
+  // Clicking the truck repeats the current tip
+  el.style.pointerEvents = "auto";
+  el.querySelector(".guide-truck").addEventListener("click", () => {
+    clearTimeout(quiet); el.classList.add("talk");
+    quiet = setTimeout(() => el.classList.remove("talk"), 7000);
+  });
+  document.addEventListener("section", (e) => say(e.detail));
+  setTimeout(() => say("top"), 1800);
 }
 
 load().then((data) => {
-  renderProfile(data);
-  renderNews(data);
+  renderHero(data);
+  renderStrip(data);
+  renderAbout(data);
+  renderFeatured(data);
   renderResearch(data);
+  renderNews(data);
   setupPubs(data);
-  renderTeam(data);
-  renderImpact(data);
-  renderTeaching(data);
-  renderService(data);
+  renderRest(data);
   setupLightbox();
   setupNav();
   setupReveal();
   setupVision();
   setupTyped(data);
-  setupPointerEffects();
-  heroNetwork();
+  setupParallax();
+  setupGuide(data);
   document.body.classList.add("loaded");
 }).catch((err) => {
   console.error(err);

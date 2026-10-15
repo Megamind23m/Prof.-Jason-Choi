@@ -7,23 +7,22 @@
   <meta name="description" content="Professor Tsan-Ming (Jason) Choi, Chair in Operations and Supply Chain Management and Director of the Centre for Supply Chain Research, University of Liverpool Management School.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=3">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=10">
 </head>
 <body>
   <div class="progress" id="progress" aria-hidden="true"></div>
-  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="#top">Jason Choi</a>
+      <a class="brand" href="#top">Tsan-Ming <span>(Jason)</span> Choi</a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
       <nav id="nav" class="nav">
         <a href="#about">About</a>
         <a href="#research">Research</a>
         <a href="#publications">Publications</a>
         <a href="#team">Team</a>
-        <a href="#impact">Funding &amp; Impact</a>
+        <a href="#impact">Impact</a>
         <a href="#teaching">Teaching</a>
         <a href="#service">Service</a>
         <a href="#contact">Contact</a>
@@ -31,45 +30,142 @@
     </div>
   </header>
 
+  <nav class="dots" id="dots" aria-label="Section navigation"></nav>
+
   <main id="top">
-    <section class="hero" id="hero">
-      <canvas class="hero-net" id="hero-net" aria-hidden="true"></canvas>
-      <div class="orb orb-a" aria-hidden="true"></div>
-      <div class="orb orb-b" aria-hidden="true"></div>
+    <!-- HERO: illustrated office scene -->
+    <section class="hero" id="hero" data-section="top">
       <div class="wrap hero-inner">
         <div class="hero-text">
-          <p class="eyebrow" id="hero-affiliation"></p>
+          <p class="pill" id="hero-pill"></p>
           <h1 id="hero-name"></h1>
-          <ul class="positions" id="hero-positions"></ul>
-          <p class="tagline"><span id="tagline-prefix"></span><br><span class="typed" id="typed"></span></p>
+          <p class="hero-intro" id="hero-intro"></p>
+          <p class="rotator"><span id="tagline-prefix"></span> <span class="typed" id="typed"></span></p>
           <div class="hero-actions" id="hero-actions"></div>
         </div>
-        <figure class="portrait" id="portrait">
-          <div class="portrait-ring" aria-hidden="true"></div>
-          <img id="hero-photo" alt="Portrait of Professor Tsan-Ming (Jason) Choi">
-          <figcaption class="hcr-badge" id="hero-badge"></figcaption>
-        </figure>
+
+        <div class="scene" aria-hidden="true">
+          <svg class="window" viewBox="0 0 200 170">
+            <rect x="4" y="4" width="192" height="162" rx="6" class="w-frame"/>
+            <rect x="14" y="14" width="172" height="142" rx="2" class="w-sky"/>
+            <circle cx="140" cy="52" r="20" class="w-sun"/>
+            <g class="w-plane"><path d="M0 0l14 4-14 4 3-4z"/><path d="M5 4l-4 7h3l5-7z"/></g>
+            <path class="w-city" d="M14 156V112h14V94h12v20h10V80h16v34h8V100h14v28h12V88h10l6-8 6 8v36h12V104h14v20h12v32z"/>
+            <path class="w-crane" d="M150 156V70M150 74h30M176 74v14"/>
+            <rect x="98" y="14" width="4" height="142" class="w-bar"/>
+            <rect x="14" y="83" width="172" height="4" class="w-bar"/>
+          </svg>
+
+          <figure class="frame">
+            <img id="hero-photo" alt="">
+            <figcaption class="frame-badge" id="hero-badge"></figcaption>
+          </figure>
+
+          <div class="board">
+            <p class="board-title" id="board-title"></p>
+            <ul class="board-lines" id="board-lines"></ul>
+            <span class="board-tray"></span>
+          </div>
+
+          <svg class="desk" viewBox="0 0 360 170">
+            <g class="books">
+              <rect x="22" y="58" width="16" height="62" rx="2" fill="#1d3a6b"/><text x="30" y="110" transform="rotate(-90 30 110)">POM</text>
+              <rect x="40" y="50" width="16" height="70" rx="2" fill="#7a2e3a"/><text x="48" y="110" transform="rotate(-90 48 110)">MSOM</text>
+              <rect x="58" y="62" width="16" height="58" rx="2" fill="#1d7874"/><text x="66" y="110" transform="rotate(-90 66 110)">EJOR</text>
+              <rect x="76" y="54" width="16" height="66" rx="2" fill="#c8952f"/><text x="84" y="110" transform="rotate(-90 84 110)">TRE</text>
+            </g>
+            <g class="laptop">
+              <rect x="150" y="40" width="120" height="78" rx="6" fill="#141c2e"/>
+              <rect x="157" y="47" width="106" height="64" rx="2" fill="#1f2b47"/>
+              <g class="lap-bars">
+                <rect x="170" y="78" width="12" height="26" rx="2"/><rect x="188" y="70" width="12" height="34" rx="2"/>
+                <rect x="206" y="62" width="12" height="42" rx="2"/><rect x="224" y="56" width="12" height="48" rx="2"/>
+              </g>
+              <polyline class="lap-line" points="166,72 186,66 204,58 222,52 248,56"/>
+              <path d="M138 120h144l-8 8H146z" fill="#2a3552"/>
+            </g>
+            <g class="mug">
+              <path d="M300 92h28v26a6 6 0 0 1-6 6h-16a6 6 0 0 1-6-6z" fill="#fbf7f0"/>
+              <path d="M328 98h5a6 6 0 0 1 0 12h-5" fill="none" stroke="#fbf7f0" stroke-width="4"/>
+              <path class="steam s1" d="M308 86c-4-6 4-10 0-16"/><path class="steam s2" d="M318 86c-4-6 4-10 0-16"/>
+            </g>
+            <rect x="0" y="126" width="360" height="12" rx="3" class="desk-top"/>
+            <rect x="18" y="138" width="10" height="32" class="desk-leg"/><rect x="332" y="138" width="10" height="32" class="desk-leg"/>
+          </svg>
+
+          <svg class="plant" viewBox="0 0 80 150">
+            <g class="leaves"><path d="M40 90C20 70 14 40 24 22c14 18 18 44 16 68z"/><path d="M40 90c18-22 30-46 22-68-16 14-22 42-22 68z"/><path d="M40 92C30 76 6 70 2 54c18-2 34 14 38 38z"/></g>
+            <path d="M22 96h36l-6 50H28z" class="pot"/>
+          </svg>
+        </div>
       </div>
-      <div class="wrap"><dl class="metrics" id="metrics"></dl></div>
-      <a class="scroll-cue" href="#about" aria-label="Scroll down"><span></span></a>
+
+      <!-- Floor: a supply chain in motion -->
+      <div class="floor" aria-hidden="true">
+        <svg viewBox="0 0 1600 170" preserveAspectRatio="xMidYMax slice">
+          <rect y="118" width="1600" height="52" class="road"/>
+          <path d="M0 144h1600" class="lane"/>
+          <!-- factory -->
+          <g class="factory" transform="translate(70 20)">
+            <path d="M0 98V48l30 18V48l30 18V48l30 18V20h20v78z" class="bld"/>
+            <rect x="92" y="0" width="14" height="22" class="bld"/>
+            <circle class="puff p1" cx="99" cy="-6" r="7"/><circle class="puff p2" cx="99" cy="-6" r="6"/><circle class="puff p3" cx="99" cy="-6" r="5"/>
+            <rect x="14" y="74" width="12" height="12" class="win"/><rect x="44" y="74" width="12" height="12" class="win"/><rect x="74" y="74" width="12" height="12" class="win"/>
+          </g>
+          <!-- port with ship -->
+          <g transform="translate(420 30)">
+            <path d="M0 74h130" class="bld-line"/>
+            <path d="M20 74V8M20 12h70M84 12v22" class="bld-line"/>
+            <g class="ship"><path d="M10 74h120l-14 18H24z" class="bld"/><rect x="34" y="56" width="18" height="18" class="crate c1"/><rect x="54" y="56" width="18" height="18" class="crate c2"/><rect x="74" y="56" width="18" height="18" class="crate c3"/><rect x="44" y="38" width="18" height="18" class="crate c2"/></g>
+            <path class="wave" d="M-10 96c10-6 20 6 30 0s20 6 30 0 20 6 30 0 20 6 30 0 20 6 30 0"/>
+          </g>
+          <!-- warehouse -->
+          <g transform="translate(820 34)">
+            <path d="M0 84V30L60 0l60 30v54z" class="bld"/>
+            <rect x="34" y="44" width="52" height="40" class="door"/>
+            <path d="M34 54h52M34 64h52M34 74h52" class="door-line"/>
+          </g>
+          <!-- store -->
+          <g transform="translate(1240 38)">
+            <rect x="0" y="20" width="110" height="60" class="bld"/>
+            <path d="M-6 20h122l-8-20H2z" class="awning"/>
+            <rect x="14" y="40" width="30" height="40" class="win"/><rect x="58" y="40" width="40" height="24" class="win"/>
+          </g>
+          <!-- drone -->
+          <g class="drone"><path d="M-18 0h36M-14 -4v4M14 -4v4" class="drone-arm"/><rect x="-8" y="-2" width="16" height="7" rx="3" class="drone-body"/><rect x="-5" y="9" width="10" height="9" class="crate c3"/><path d="M0 5v4" class="drone-arm"/></g>
+          <!-- trucks -->
+          <g class="truck t1"><rect x="0" y="0" width="64" height="34" rx="3" class="box"/><text x="32" y="22">CSCR</text><path d="M64 10h16l10 12v12H64z" class="cab"/><circle cx="16" cy="38" r="7" class="wheel"/><circle cx="76" cy="38" r="7" class="wheel"/></g>
+          <g class="truck t2"><rect x="0" y="0" width="64" height="34" rx="3" class="box b2"/><path d="M64 10h16l10 12v12H64z" class="cab"/><circle cx="16" cy="38" r="7" class="wheel"/><circle cx="76" cy="38" r="7" class="wheel"/></g>
+        </svg>
+      </div>
     </section>
+
+    <div class="wrap"><dl class="metrics" id="metrics"></dl></div>
 
     <section class="honours-strip" aria-label="Editorial leadership">
       <div class="wrap honours" id="honours"></div>
     </section>
-
     <section class="marquee-band" aria-label="Journals published in">
       <p class="marquee-label">Published in</p>
       <div class="marquee"><div class="marquee-track" id="marquee"></div></div>
     </section>
 
-    <section class="section" id="about">
-      <div class="wrap two-col">
+    <!-- ABOUT: intro with research reel -->
+    <section class="section" id="about" data-section="about">
+      <div class="wrap intro">
         <div>
-          <h2 class="section-title">About</h2>
-          <p class="lead reveal" id="bio"></p>
+          <p class="eyebrow">About</p>
+          <h2 class="big-title">Hello, I'm <em>Jason.</em></h2>
+          <p class="lead" id="bio"></p>
+          <div class="reel">
+            <div class="reel-stage" id="reel-stage"></div>
+            <ol class="reel-list" id="reel-list"></ol>
+          </div>
         </div>
-        <aside class="card reveal" id="about-quick"></aside>
+        <figure class="photo-card reveal">
+          <img src="images/home-2.jpg" alt="Prof. Choi presenting at the University of Liverpool Management School">
+          <figcaption>Seminar on blockchain for manufacturing and service operations, ULMS (Jan 2026)</figcaption>
+        </figure>
       </div>
       <div class="wrap">
         <h3 class="sub-title reveal">Academic journey</h3>
@@ -77,10 +173,13 @@
       </div>
     </section>
 
-    <section class="section alt" id="news-section">
+    <!-- FEATURED -->
+    <section class="section tint" id="featured" data-section="featured">
       <div class="wrap">
-        <h2 class="section-title">Latest</h2>
-        <div class="news" id="news"></div>
+        <p class="eyebrow">Featured research</p>
+        <h2 class="big-title">Recent work in <em>leading</em> journals</h2>
+        <div class="covers-row" id="featured-list"></div>
+        <a class="text-link" href="#publications">All publications &rarr;</a>
       </div>
     </section>
 
@@ -88,22 +187,41 @@
       <div class="wrap"><p class="vision-text" id="vision"></p></div>
     </section>
 
-    <section class="section" id="research">
-      <div class="wrap">
-        <h2 class="section-title">Research</h2>
-        <div class="interests" id="interests"></div>
-        <div class="two-col research-body">
-          <div class="statement reveal" id="statement"></div>
-          <div class="reveal" id="research-figs"></div>
+    <!-- RESEARCH -->
+    <section id="research" data-section="research">
+      <header class="page-head">
+        <div class="wrap">
+          <p class="eyebrow light">Research &amp; expertise</p>
+          <h2>How supply chains become <em>intelligent, resilient</em> and <em>sustainable</em></h2>
+        </div>
+      </header>
+      <div class="section">
+        <div class="wrap">
+          <div class="areas" id="areas"></div>
+          <div class="two-col research-body">
+            <div class="statement reveal" id="statement"></div>
+            <div class="reveal" id="research-figs"></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section alt" id="publications">
+    <!-- NEWS -->
+    <section class="section tint" id="news-section" data-section="about">
       <div class="wrap">
+        <p class="eyebrow">News</p>
+        <h2 class="big-title">Latest <em>updates</em></h2>
+        <div class="news" id="news"></div>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section class="section" id="publications" data-section="publications">
+      <div class="wrap">
+        <p class="eyebrow">Publications</p>
         <div class="section-head">
-          <h2 class="section-title">Publications</h2>
-          <p class="muted">Selected recent work since 2022 (partial list).</p>
+          <h2 class="big-title">Selected <em>publications</em></h2>
+          <p class="muted">Recent work since 2022 (partial list).</p>
         </div>
         <div class="pub-chart reveal" id="pub-chart" aria-label="Publications per year"></div>
         <div class="pub-controls">
@@ -120,36 +238,50 @@
       </div>
     </section>
 
-    <section class="section" id="team">
+    <!-- TEAM -->
+    <section class="section tint" id="team" data-section="team">
       <div class="wrap">
-        <h2 class="section-title">Research Team</h2>
+        <p class="eyebrow">People</p>
+        <h2 class="big-title">The research <em>team</em></h2>
         <p class="muted">Research team at ULMS and the Centre for Supply Chain Research.</p>
         <div class="team-groups" id="team-groups"></div>
       </div>
       <div class="photo-marquee" id="team-photos"></div>
     </section>
 
-    <section class="section dark" id="impact">
-      <div class="wrap">
-        <h2 class="section-title">Funding &amp; Impact</h2>
-        <ul class="highlights" id="highlights"></ul>
-        <h3 class="sub-title">Funded projects</h3>
-        <p class="muted small">PI = Principal Investigator; Co = Co-Investigator / Collaborator.</p>
-        <ol class="projects" id="projects"></ol>
+    <!-- IMPACT -->
+    <section id="impact" data-section="impact">
+      <header class="page-head">
+        <div class="wrap">
+          <p class="eyebrow light">Funding &amp; impact</p>
+          <h2>Research that reaches <em>policy and practice</em></h2>
+        </div>
+      </header>
+      <div class="section">
+        <div class="wrap">
+          <ul class="highlights" id="highlights"></ul>
+          <h3 class="sub-title reveal">Funded projects</h3>
+          <p class="muted small">PI = Principal Investigator; Co = Co-Investigator / Collaborator.</p>
+          <ol class="projects" id="projects"></ol>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="teaching">
+    <!-- TEACHING -->
+    <section class="section tint" id="teaching" data-section="team">
       <div class="wrap">
-        <h2 class="section-title">Teaching</h2>
+        <p class="eyebrow">Teaching</p>
+        <h2 class="big-title">In the <em>classroom</em></h2>
         <div class="courses" id="courses"></div>
         <div class="gallery" id="teaching-photos"></div>
       </div>
     </section>
 
-    <section class="section alt" id="service">
+    <!-- SERVICE -->
+    <section class="section" id="service" data-section="service">
       <div class="wrap">
-        <h2 class="section-title">Academic Service &amp; Editorships</h2>
+        <p class="eyebrow">Service</p>
+        <h2 class="big-title">Editorships &amp; <em>leadership</em></h2>
         <div class="service-grid">
           <dl class="roles" id="roles"></dl>
           <div class="covers" id="covers"></div>
@@ -157,13 +289,15 @@
       </div>
     </section>
 
-    <section class="section" id="contact">
-      <div class="wrap two-col">
+    <!-- CONTACT -->
+    <section class="cta" id="contact" data-section="contact">
+      <div class="wrap cta-inner">
         <div>
-          <h2 class="section-title">Contact</h2>
-          <div class="reveal" id="contact-main"></div>
+          <p class="eyebrow dark">Contact</p>
+          <h2 class="big-title">Let's talk <em>supply chains.</em></h2>
+          <div id="contact-main"></div>
         </div>
-        <div class="card reveal" id="contact-ids"></div>
+        <div class="card" id="contact-ids"></div>
       </div>
     </section>
   </main>
@@ -175,6 +309,20 @@
     </div>
   </footer>
 
+  <!-- Guide: a little courier truck with tips for each section -->
+  <div class="guide" id="guide" hidden>
+    <div class="bubble" id="guide-bubble"></div>
+    <svg class="guide-truck" viewBox="0 0 100 52" aria-hidden="true">
+      <rect x="2" y="4" width="62" height="34" rx="4" class="g-box"/>
+      <text x="33" y="26">CSCR</text>
+      <path d="M64 14h18l14 14v10H64z" class="g-cab"/>
+      <path d="M70 18h10l8 9H70z" class="g-glass"/>
+      <g class="g-wheel w1"><circle cx="20" cy="42" r="8"/><path d="M20 36v12M14 42h12"/></g>
+      <g class="g-wheel w2"><circle cx="80" cy="42" r="8"/><path d="M80 36v12M74 42h12"/></g>
+    </svg>
+  </div>
+  <button class="guide-toggle" id="guide-toggle" hidden>Hide guide</button>
+
   <a class="to-top" id="to-top" href="#top" aria-label="Back to top">&uarr;</a>
 
   <div class="lightbox" id="lightbox" hidden>
@@ -182,6 +330,6 @@
     <figure><img alt=""><figcaption></figcaption></figure>
   </div>
 
-  <script src="assets/app.js?v=3"></script>
+  <script src="assets/app.js?v=10"></script>
 </body>
 </html>

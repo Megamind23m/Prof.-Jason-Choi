@@ -1,0 +1,42 @@
+{
+  "enabled": true,
+  "name": "The CSCR courier",
+  "tips": [
+    {
+      "section": "top",
+      "text": "Hello! I deliver the highlights. Scroll and I will show you around."
+    },
+    {
+      "section": "about",
+      "text": "Over 20 years of teaching across Hong Kong, Taiwan and the UK."
+    },
+    {
+      "section": "featured",
+      "text": "Fresh from UTD24 and FT50 journals. Click a cover to read the paper."
+    },
+    {
+      "section": "research",
+      "text": "Four research areas. Each column lists the latest papers behind it."
+    },
+    {
+      "section": "publications",
+      "text": "Search or filter every paper. New ones arrive automatically each week."
+    },
+    {
+      "section": "team",
+      "text": "Meet the research team at ULMS and CSCR."
+    },
+    {
+      "section": "impact",
+      "text": "Cited by the United Nations and the WHO."
+    },
+    {
+      "section": "service",
+      "text": "Editor-in-Chief of IEEE Transactions on Engineering Management."
+    },
+    {
+      "section": "contact",
+      "text": "Delivered! Drop Prof. Choi an email."
+    }
+  ]
+}

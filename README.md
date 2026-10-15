@@ -55,6 +55,10 @@ Common tasks:
 - **Add news:** Latest news → *Add an entry* → date, title, one line of text, optional photo.
 - **Change a photo:** click the image field → upload a new photo.
 - **Add a PhD student:** Research team → Groups → Current PhD students → *Add an entry*.
+- **Change the whiteboard or hero words:** Profile & contact → *Whiteboard lines* / *Animated words in the hero*.
+- **Change or turn off the little truck guide:** Guide → edit the tips, or untick *Show the guide*.
+- **Research area paper lists:** Research → each area's *Keywords*. Papers whose citation contains
+  one of the keywords are listed under that area automatically.
 
 Every change is saved with full history, so any mistake can be undone (GitHub → the file → *History*).
 

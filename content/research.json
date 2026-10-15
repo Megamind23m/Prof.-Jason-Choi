@@ -9,19 +9,102 @@
   "interests": [
     {
       "title": "OSCM with disruptive technologies",
-      "description": "AI, blockchain, platforms, robots, cyber-security, and Industry 5.0."
+      "description": "AI, blockchain, platforms, robots, cyber-security, and Industry 5.0.",
+      "headline": "How AI, blockchain, platforms and robots reshape operations.",
+      "keywords": [
+        "blockchain",
+        "ai",
+        "artificial intelligence",
+        "platform",
+        "robot",
+        "cyber",
+        "metaverse",
+        "live stream",
+        "live-stream",
+        "livestream",
+        "digital",
+        "industry 4.0",
+        "industry 5.0",
+        "smart contract",
+        "3d printing",
+        "crowdfunding",
+        "machine learning",
+        "data"
+      ]
     },
     {
       "title": "Sustainable and ethical operations",
-      "description": "Returns, bracketing, trade-in, CSR, CLSCs, and regenerative supply chains."
+      "description": "Returns, bracketing, trade-in, CSR, CLSCs, and regenerative supply chains.",
+      "headline": "Returns, trade-in, circularity and regenerative supply chains.",
+      "keywords": [
+        "sustainab",
+        "green",
+        "carbon",
+        "circular",
+        "remanufactur",
+        "trade-in",
+        "second-hand",
+        "used apparel",
+        "csr",
+        "esg",
+        "environment",
+        "climate",
+        "net-zero",
+        "net zero",
+        "ethical",
+        "closed-loop",
+        "take-back",
+        "greenwashing",
+        "electric vehicle",
+        "returns"
+      ]
     },
     {
       "title": "Operations-marketing interface",
-      "description": "Operations considering consumer behaviors."
+      "description": "Operations considering consumer behaviors.",
+      "headline": "Operations that account for how consumers really behave.",
+      "keywords": [
+        "consumer",
+        "pricing",
+        "retail",
+        "bracketing",
+        "money-back",
+        "free sample",
+        "variety",
+        "social comparison",
+        "brand",
+        "membership",
+        "bundling",
+        "e-tailing",
+        "e-commerce",
+        "luxury",
+        "pre-ordering"
+      ]
     },
     {
       "title": "Supply chain coordination",
-      "description": "Contracting, information, and risk."
+      "description": "Contracting, information, and risk.",
+      "headline": "Contracts, information and risk across the chain.",
+      "keywords": [
+        "contract",
+        "coordination",
+        "risk",
+        "financing",
+        "information",
+        "sourcing",
+        "bargaining",
+        "newsvendor",
+        "disruption",
+        "pandemic",
+        "covid",
+        "subsid",
+        "policy",
+        "loan",
+        "credit",
+        "collusion",
+        "scheduling",
+        "logistics"
+      ]
     }
   ],
   "images": [

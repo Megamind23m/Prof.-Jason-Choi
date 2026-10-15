@@ -20,6 +20,9 @@ content:
       - { name: affiliation, label: Affiliation, type: string }
       - { name: tagline_prefix, label: Hero line (before the animated words), type: string }
       - { name: tagline_words, label: Animated words in the hero, type: string, list: true }
+      - { name: intro, label: Short intro under the name, type: text }
+      - { name: whiteboard_title, label: Whiteboard heading (hero drawing), type: string }
+      - { name: whiteboard_lines, label: Whiteboard lines, type: string, list: true }
       - { name: badge, label: Gold badge text on photo, type: string }
       - name: honours
         label: Leadership strip (under the hero)
@@ -100,6 +103,8 @@ content:
         fields:
           - { name: title, label: Title, type: string }
           - { name: description, label: Description, type: text }
+          - { name: headline, label: One-line summary, type: string }
+          - { name: keywords, label: Keywords used to sort papers into this area, type: string, list: true }
       - { name: vision, label: Vision statement (large quote band), type: text }
       - { name: statement, label: Research statement paragraphs, type: text, list: true }
       - name: images
@@ -208,6 +213,22 @@ content:
         fields:
           - { name: image, label: Image, type: image }
           - { name: caption, label: Caption, type: string }
+
+  - name: guide
+    label: Guide (little truck tips)
+    type: file
+    path: content/guide.json
+    format: json
+    fields:
+      - { name: enabled, label: Show the guide, type: boolean }
+      - { name: name, label: Guide name, type: string }
+      - name: tips
+        label: Tips per section
+        type: object
+        list: true
+        fields:
+          - { name: section, label: Section id, type: string }
+          - { name: text, label: Tip, type: string }
 
   - name: sync
     label: Automatic publication sync
