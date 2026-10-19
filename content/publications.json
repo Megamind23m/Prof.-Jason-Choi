@@ -1,5 +1,93 @@
 [
   {
+    "category": "Other selected journals",
+    "title": "Exploring complementarities and differences between Operational Research and Generative AI to transform operations",
+    "year": 2026,
+    "citation": "Choi, T., Basu, P., Tiwari, S., Biswas, I., Kunc, M. (2026). Exploring complementarities and differences between Operational Research and Generative AI to transform operations. Journal of the Operational Research Society, 77(7), 1665-1674.",
+    "journal": "Journal of the Operational Research Society",
+    "link": "https://doi.org/10.1080/01605682.2026.2674225",
+    "source": "openalex",
+    "added": "2026-10-19",
+    "hidden": false
+  },
+  {
+    "category": "Other ABS 4* journals",
+    "title": "Bundling sales strategies in live-streaming operations: consumer heterogeneity and market information",
+    "year": 2026,
+    "citation": "Zhao, C., Guo, Z., Yan, K., Choi, T. (2026). Bundling sales strategies in live-streaming operations: consumer heterogeneity and market information. International Journal of Production Research, published online.",
+    "journal": "International Journal of Production Research",
+    "link": "https://doi.org/10.1080/00207543.2026.2650518",
+    "source": "openalex",
+    "added": "2026-10-19",
+    "hidden": false
+  },
+  {
+    "category": "Other ABS 4* journals",
+    "title": "A three-tier framework for regulated closed-loop supply chains: Low carbon operations and climate change mitigation",
+    "year": 2026,
+    "citation": "Bayrak, B., Choi, T., Guo, S.J., Chen, Y. (2026). A three-tier framework for regulated closed-loop supply chains: Low carbon operations and climate change mitigation. International Journal of Production Economics, 296, 109987-109987.",
+    "journal": "International Journal of Production Economics",
+    "link": "https://doi.org/10.1016/j.ijpe.2026.109987",
+    "source": "openalex",
+    "added": "2026-10-19",
+    "hidden": false
+  },
+  {
+    "category": "Other ABS 4* journals",
+    "title": "A Framework for Understanding Blockchain Adoption in Supply Chain Operations: A Multicase Study",
+    "year": 2026,
+    "citation": "Raj, A., Choi, T., Kumar, R.R., Aggarwal, S. (2026). A Framework for Understanding Blockchain Adoption in Supply Chain Operations: A Multicase Study. IEEE Transactions on Engineering Management, 73, 1390-1401.",
+    "journal": "IEEE Transactions on Engineering Management",
+    "link": "https://doi.org/10.1109/tem.2026.3653443",
+    "source": "openalex",
+    "added": "2026-10-19",
+    "hidden": false
+  },
+  {
+    "category": "Other ABS 4* journals",
+    "title": "The Retail Platform’s Green Packaging Strategy: The Interplay between Government Tax Policies and Environmentally Conscious Consumers",
+    "year": 2026,
+    "citation": "S Zhao, Y Zha, X Guo, TM Choi (2026). The Retail Platform’s Green Packaging Strategy: The Interplay between Government Tax Policies and Environmentally Conscious Consumers. International Journal of Production Research 64 (1), 274-293, 2026.",
+    "journal": "International Journal of Production Research",
+    "link": "",
+    "source": "scholar",
+    "added": "2026-10-19",
+    "hidden": false
+  },
+  {
+    "category": "Other selected journals",
+    "title": "Supply Chain Strategies in the Presence of Livestream E-commerce: Channel Leadership and Low-carbon Promotion",
+    "year": 2026,
+    "citation": "W Liu, X Cao, X Niu, X Fang, TM Choi (2026). Supply Chain Strategies in the Presence of Livestream E-commerce: Channel Leadership and Low-carbon Promotion. Annals of Operations Research 359, 645–676, 2026.",
+    "journal": "Annals of Operations Research",
+    "link": "",
+    "source": "scholar",
+    "added": "2026-10-19",
+    "hidden": false
+  },
+  {
+    "category": "Other ABS 4* journals",
+    "title": "An Energy-Efficient Coordinated Procurement, Production, and Batch Delivery Scheduling System for Sustainable Operations and Net-Zero Emissions",
+    "year": 2026,
+    "citation": "S Ahmed, RK Chakrabortty, A Abbasi, TM Choi (2026). An Energy-Efficient Coordinated Procurement, Production, and Batch Delivery Scheduling System for Sustainable Operations and Net-Zero Emissions. Transportation Research Part E: Logistics and Transportation Review, 2026.",
+    "journal": "Transportation Research Part E: Logistics and Transportation Review",
+    "link": "",
+    "source": "scholar",
+    "added": "2026-10-19",
+    "hidden": false
+  },
+  {
+    "category": "Other selected journals",
+    "title": "Fighting Against COVID-19: What Operations Research Can Help and the Sense-and-Respond Framework",
+    "year": 2026,
+    "citation": "TM Choi (2026). Fighting Against COVID-19: What Operations Research Can Help and the Sense-and-Respond Framework. Annals of Operations Research 360, 97-113, 2026.",
+    "journal": "Annals of Operations Research",
+    "link": "",
+    "source": "scholar",
+    "added": "2026-10-19",
+    "hidden": false
+  },
+  {
     "category": "Books",
     "year": 2026,
     "citation": "Choi, T.M. (Ed.) Encyclopedia in Operations Management (Elsevier), May 2026.",

@@ -1,15 +1,15 @@
 {
   "metrics": [
     {
-      "value": "41,064",
+      "value": "41,389",
       "label": "Google Scholar citations"
     },
     {
-      "value": "109",
+      "value": "110",
       "label": "Google Scholar h-index"
     },
     {
-      "value": "376",
+      "value": "377",
       "label": "Google Scholar i10-index"
     },
     {
@@ -112,5 +112,6 @@
       "image": "images/impact-4.jpg",
       "caption": ""
     }
-  ]
+  ],
+  "metrics_updated": "October 2026"
 }
