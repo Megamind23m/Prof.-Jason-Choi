@@ -172,7 +172,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 
 /* Leadership strip + journal marquee */
 .honours-strip { background: var(--navy); margin-top: 56px; }
-.honours { display: grid; grid-template-columns: repeat(4, 1fr); }
+.honours { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .honour { padding: 28px 22px; border-left: 1px solid rgba(255, 255, 255, .08); transition: background .3s; }
 .honour:first-child { border-left: 0; }
 .honour:hover { background: rgba(255, 255, 255, .04); }

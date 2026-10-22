@@ -23,7 +23,7 @@
     "Resilient → risk & coordination",
     "Sustainable → circular & regenerative"
   ],
-  "badge": "Highly Cited Researcher, every year since 2022",
+  "badge": "",
   "honours": [
     {
       "role": "Editor-in-Chief",
@@ -36,10 +36,6 @@
     {
       "role": "Past Editor-in-Chief",
       "outlet": "Transportation Research Part E"
-    },
-    {
-      "role": "Yushan Fellow Professor",
-      "outlet": "National Taiwan University"
     }
   ],
   "bio": "Tsan-Ming CHOI (Jason) is an operational researcher and systems engineer. He is now Chair in Operations and Supply Chain Management, and Director of the Centre for Supply Chain Research (CSCR) at University of Liverpool Management School (ULMS). He has published extensively in leading journals in the fields of operations management, engineering management, and logistics and supply chain management. His recent research has been funded by many external funding bodies. Over the past decade, he has served the academic community as an editor/senior editor of journals such as IEEE Transactions on Engineering Management, IEEE Transactions on SMC-Systems, and Production and Operations Management. He is also the advisory editor (past EIC) of Transportation Research Part E. He has been listed as a Highly Cited Researcher by Clarivate (Web of Science) since 2022. Before joining ULMS, he taught at National Taiwan University (NTU), The Hong Kong Polytechnic University (PolyU), and The Chinese University of Hong Kong (CUHK), together for more than 20 years. He is honoured as a Yushan Fellow Professor at NTU, a President's Award Winning Professor at PolyU, and a distinguished alumnus of CUHK's Faculty of Engineering.",
@@ -57,7 +53,7 @@
     {
       "place": "National Taiwan University",
       "short": "NTU",
-      "note": "Yushan Fellow Professor"
+      "note": "Professor"
     },
     {
       "place": "University of Liverpool",
